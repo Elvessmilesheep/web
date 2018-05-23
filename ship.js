@@ -52,11 +52,53 @@ fire: function (guess) {
                 return false;
             }
         }
+        return true;
     }
+};
+function parseGuess(guess) {
+	var alphabet = ["A", "B", "C", "D", "E", "F", "G"];
+
+	if (guess === null || guess.length !== 2) {
+		alert("Oops, please enter a letter and a number on the board.");
+	} else {
+		var row = alphabet.indexOf(guess.charAt(0));
+		var column = guess.charAt(1);
+		
+		if (isNaN(row) || isNaN(column)) {
+			alert("Oops, that isn't on the board.");
+		} else if (row < 0 || row >= model.boardSize ||
+		           column < 0 || column >= model.boardSize) {
+			alert("Oops, that's off the board!");
+		} else {
+			return row + column;
+		}
+	}
+	return null;
 }
-view.displayMiss("00");
-view.displayHit("34");
-view.displayMiss("55");
-view.displayHit("12");
-view.displayMiss("25");
-view.displayHit("26");
+
+ var controller = {
+     guesses: 0 ,
+     processGuess: function(guess) {
+         var location = parseGuess(guess);
+         if (location){
+        this.guesses++;
+        var hit = model.fire(location);
+        if(hit && model.shipsSunk === model.numShips) {
+            view.displayMessage("You sank all my battleships, in"+ his.guesses + "guesses")
+
+        }
+         }
+     }
+    }
+    function headleFireButton(){
+        var guessInput  = document.getElementById("guessInput");
+        var guess = guessInput.value;
+        controller.processGuess(guess);
+        guessInput.value = "";
+    }
+// view.displayMiss("00");
+// view.displayHit("34");
+// view.displayMiss("55");
+// view.displayHit("12");
+// view.displayMiss("25");
+// view.displayHit("26");
